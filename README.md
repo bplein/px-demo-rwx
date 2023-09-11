@@ -8,3 +8,5 @@
  * A busybox deployment with 3 replicas, all mounting the pvc on `/mnt/busybox`
 
  The busybox deployment, when run, echos its pod name and date to `/mnt/busybox/status.txt`. You can exec into any pod and see that all 3 pods have written to the file. 
+
+ A quick and dirty script called `exec_pod.sh` will exec into one of the pods and output the contents of the `status.txt` file.
