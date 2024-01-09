@@ -1,0 +1,24 @@
+{
+    "FlashArrays": [
+        {
+            "MgmtEndPoint": "sn1-m70r2-f07-27.puretec.purestorage.com",
+            "APIToken": "228a782b-34b8-c033-0686-e01c98820816"
+        },
+        {
+            "MgmtEndPoint": "sn1-x70-f06-27.puretec.purestorage.com",
+            "APIToken": "857847a8-1102-0637-4ee4-8fd062128742"
+        }
+    ],
+    "FlashBlades": [
+        {
+            "MgmtEndPoint": "sn1-fb-c07-17.puretec.purestorage.com",
+            "APIToken": "T-68618f31-0c9e-4e57-aa44-5306a2cf10e3",
+            "NFSEndPoint": "10.21.230.52"
+        },
+        {
+            "MgmtEndPoint": "sn1-fb-c07-23.puretec.purestorage.com",
+            "APIToken": "T-0ba43bc7-3809-4256-9e16-0ab7fdcd8cca",
+            "NFSEndPoint": "10.21.200.27"
+        }
+    ]
+}

@@ -1,24 +1,27 @@
 kind: StorageClass
 apiVersion: storage.k8s.io/v1
 metadata:
-    name: px-sharedv4-sc-csi
+  name: portworx-fbda
 provisioner: pxd.portworx.com
 parameters:
-   repl: "2"
-   sharedv4: "true"
-   sharedv4_svc_type: "ClusterIP"
+  backend: "pure_file"
+  pure_export_rules: "*(rw)"
+mountOptions:
+  - nfsvers=3
+  - tcp
+allowVolumeExpansion: true
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: px-rwx-csi
+  name: portworx-fbda
 spec:
   accessModes:
     - ReadWriteMany
   resources:
     requests:
       storage: 12Gi
-  storageClassName: px-sharedv4-sc-csi
+  storageClassName: portworx-fbda
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -57,4 +60,4 @@ spec:
       volumes:
       - name: busybox-rwx
         persistentVolumeClaim:
-          claimName: px-rwx-csi
+          claimName: portworx-fbda
