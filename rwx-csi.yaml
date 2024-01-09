@@ -50,7 +50,7 @@ spec:
       - name: busybox-rwx
         image: busybox
         imagePullPolicy: IfNotPresent
-        command: ['sh', '-c', 'echo $(hostname) is alive and well at $(date)! >> /mnt/busybox-rwx/status.txt ; trap : TERM INT; sleep infinity & wait']
+        command: ['sh', '-c', 'while true;do echo $(hostname) is alive and well at $(date)! >> /mnt/busybox-rwx/status.txt;sleep 10;done ; trap : TERM INT; sleep infinity & wait']
         volumeMounts:
         - mountPath: /mnt/busybox-rwx
           name: busybox-rwx
