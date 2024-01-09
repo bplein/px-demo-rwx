@@ -45,15 +45,6 @@ spec:
                 operator: In
                 values:
                 - busybox-rwx-px
-            topologyKey: "kubernetes.io/hostname"      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-              - key: app
-                operator: In
-                values:
-                - busybox-rwx-px
             topologyKey: "kubernetes.io/hostname"
       containers:
       - name: busybox-rwx
