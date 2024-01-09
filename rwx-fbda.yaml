@@ -26,18 +26,18 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: busybox-rwx-deployment-csi
+  name: busybox-rwx-fbda
   labels:
-    app: busybox-rwx
+    app: busybox-rwx-fbda
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: busybox-rwx
+      app: busybox-rwx-fbda
   template:
     metadata:
       labels:
-        app: busybox-rwx
+        app: busybox-rwx-fbda
     spec:
       affinity:
         podAntiAffinity:
@@ -47,7 +47,7 @@ spec:
               - key: app
                 operator: In
                 values:
-                - busybox-rwx
+                - busybox-rwx-fbda
             topologyKey: "kubernetes.io/hostname"
       containers:
       - name: busybox-rwx

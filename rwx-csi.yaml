@@ -25,7 +25,7 @@ kind: Deployment
 metadata:
   name: busybox-rwx-deployment-csi
   labels:
-    app: busybox-rwx
+    app: busybox-rwx-px
 spec:
   replicas: 3
   selector:
@@ -34,7 +34,7 @@ spec:
   template:
     metadata:
       labels:
-        app: busybox-rwx
+        app: busybox-rwx-px
     spec:
       affinity:
         podAntiAffinity:
@@ -44,7 +44,16 @@ spec:
               - key: app
                 operator: In
                 values:
-                - busybox-rwx
+                - busybox-rwx-px
+            topologyKey: "kubernetes.io/hostname"      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - busybox-rwx-px
             topologyKey: "kubernetes.io/hostname"
       containers:
       - name: busybox-rwx
