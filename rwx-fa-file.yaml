@@ -1,12 +1,12 @@
 kind: StorageClass
 apiVersion: storage.k8s.io/v1
 metadata:
-    name: px-sharedv4-sc-csi
+    name: px-fa-file-csi
 provisioner: pxd.portworx.com
 parameters:
-   repl: "2"
-   sharedv4: "true"
-   sharedv4_svc_type: "ClusterIP"
+  backend: "pure_fa_file"
+  pure_nfs_policy: "nfs-simple"
+  pure_fa_file_system: "plein-csi"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -18,7 +18,7 @@ spec:
   resources:
     requests:
       storage: 12Gi
-  storageClassName: px-sharedv4-sc-csi
+  storageClassName: px-fa-file-csi
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -50,7 +50,7 @@ spec:
       - name: busybox-rwx
         image: busybox
         imagePullPolicy: IfNotPresent
-        command: ['sh', '-c', 'while true;do echo $(hostname) is alive and well at $(date)! >> /mnt/busybox-rwx/status.txt;sleep 10;done ; trap : TERM INT; sleep infinity & wait']
+        command: ['sh', '-c', 'while true;do echo $(hostname) is alive and well at $(date)! >> /mnt/busybox-rwx/$(hostname)-status.txt;sleep $(( ( RANDOM % 5 ) + 3 ));done ; trap : TERM INT; sleep infinity & wait']
         volumeMounts:
         - mountPath: /mnt/busybox-rwx
           name: busybox-rwx

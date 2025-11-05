@@ -1,43 +1,40 @@
 kind: StorageClass
 apiVersion: storage.k8s.io/v1
 metadata:
-  name: portworx-fbda
+    name: px-sharedv4-sc-csi
 provisioner: pxd.portworx.com
 parameters:
-  backend: "pure_file"
-  pure_export_rules: "*(rw)"
-mountOptions:
-  - nfsvers=3
-  - tcp
-allowVolumeExpansion: true
+   repl: "2"
+   sharedv4: "true"
+   sharedv4_svc_type: "ClusterIP"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: portworx-fbda
+  name: px-rwx-csi
 spec:
   accessModes:
     - ReadWriteMany
   resources:
     requests:
       storage: 12Gi
-  storageClassName: portworx-fbda
+  storageClassName: px-sharedv4-sc-csi
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: busybox-rwx-fbda
+  name: busybox-rwx-deployment-csi
   labels:
-    app: busybox-rwx-fbda
+    app: busybox-rwx-px
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: busybox-rwx-fbda
+      app:  busybox-rwx-px
   template:
     metadata:
       labels:
-        app: busybox-rwx-fbda
+        app: busybox-rwx-px
     spec:
       affinity:
         podAntiAffinity:
@@ -47,7 +44,7 @@ spec:
               - key: app
                 operator: In
                 values:
-                - busybox-rwx-fbda
+                - busybox-rwx-px
             topologyKey: "kubernetes.io/hostname"
       containers:
       - name: busybox-rwx
@@ -60,4 +57,4 @@ spec:
       volumes:
       - name: busybox-rwx
         persistentVolumeClaim:
-          claimName: portworx-fbda
+          claimName: px-rwx-csi
